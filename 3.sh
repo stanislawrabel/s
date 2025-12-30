@@ -18,7 +18,7 @@ RESET="\033[0m"
 # === 🧠 CHECK ARIA2 ===
 if ! command -v aria2c &>/dev/null; then
   echo -e "${RED}❌ aria2c not installed .${RESET}"
-  echo "👉 Run: pkg install aria2c -y"
+  echo "👉 Run: pkg install aria2 -y"
   exit 1
 fi
 
