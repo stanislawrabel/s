@@ -7,13 +7,7 @@ BLUE="\033[34m"
 PURPLE="\033[35m"
 RESET="\033[0m"
 
-echo -e "${GREEN}+=====================================+${RESET}"
-echo -e "${GREEN}|  ${RESET} ${YELLOW}    DownloadeR${RESET} & ${YELLOW}Resolver${RESET}         ${GREEN}|${RESET}"
 
-echo -e "${GREEN}|    ${RED}         by${RESET} ${BLUE}Stano36 ${RESET}             ${GREEN}|${RESET}"
-echo -e "${GREEN}+=====================================+${RESET}"                              
-echo -e "${GREEN}|${RESET} ${YELLOW_BG}${BLACK}  realme   ${RESET}  ${GREEN_BG}${BLACK}  oppo  ${RESET}  ${RED_BG}${WHITE}  Oneplus  ${RESET}  ${GREEN}|${RESET}"
-echo -e "${GREEN}+=====================================+${RESET}" 
 
 
 # === 🧠 CHECK ARIA2 ===
@@ -63,7 +57,14 @@ resolve_zip() {
 }
 
 clear
-echo -e "${GREEN}DownloadeR & Resolver (OTA FINAL)${RESET}"
+echo -e "${GREEN}+=====================================+${RESET}"
+echo -e "${GREEN}|  ${RESET} ${YELLOW}    DownloadeR${RESET} & ${YELLOW}Resolver${RESET}         ${GREEN}|${RESET}"
+
+echo -e "${GREEN}|    ${RED}         by${RESET} ${BLUE}Stano36 ${RESET}             ${GREEN}|${RESET}"
+echo -e "${GREEN}+=====================================+${RESET}"                              
+echo -e "${GREEN}|${RESET} ${YELLOW_BG}${BLACK}  realme   ${RESET}  ${GREEN_BG}${BLACK}  oppo  ${RESET}  ${RED_BG}${WHITE}  Oneplus  ${RESET}  ${GREEN}|${RESET}"
+echo -e "${GREEN}+=====================================+${RESET}" 
+
 
 while true; do
   echo
