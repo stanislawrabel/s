@@ -1,28 +1,11 @@
 #!/bin/bash
-#
 
-# === 🎨 COLORS ===
-WHITE="\033[37m"
-PURPLE="\033[35m" 
+GREEN="\033[32m"
+RED="\033[31m"
 YELLOW="\033[33m"
 BLUE="\033[34m"
-RED="\033[31m"
-BLACK="\033[30m"
-WHITE="\033[37m"
-GREEN="\033[32m"
-YELLOW_BG="\033[43m"
-GREEN_BG="\033[42m"
-RED_BG="\033[41m"
+PURPLE="\033[35m"
 RESET="\033[0m"
-
-# === 🧠 CHECK ARIA2 ===
-if ! command -v aria2c &>/dev/null; then
-  echo -e "${RED}❌ aria2c not installed .${RESET}"
-  echo "👉 Run: pkg install aria2 -y"
-  exit 1
-fi
-
-clear
 
 echo -e "${GREEN}+=====================================+${RESET}"
 echo -e "${GREEN}|  ${RESET} ${YELLOW}    DownloadeR${RESET} & ${YELLOW}Resolver${RESET}         ${GREEN}|${RESET}"
@@ -33,22 +16,39 @@ echo -e "${GREEN}|${RESET} ${YELLOW_BG}${BLACK}  realme   ${RESET}  ${GREEN_BG}$
 echo -e "${GREEN}+=====================================+${RESET}" 
 
 
-# === 📁 PATHS ===
+# === 🧠 CHECK ARIA2 ===
+if ! command -v aria2c &>/dev/null; then
+  echo -e "${RED}❌ aria2c not installed .${RESET}"
+  echo "👉 Run: pkg install aria2 -y"
+  exit 1
+fi
+
 DOWNLOAD_DIR="/storage/emulated/0/Download/DownloadeR"
 LOG_FILE="$DOWNLOAD_DIR/ota_downloads.log"
-
 mkdir -p "$DOWNLOAD_DIR"
 
-# === 🔧 CHECK DEPENDENCIES ===
-for cmd in curl aria2c; do
-  if ! command -v $cmd >/dev/null 2>&1; then
-    echo -e "${RED}❌ Missing dependency: $cmd${RESET}"
-    echo "👉 Run: pkg install $cmd -y"
+for cmd in aria2c curl python3; do
+  command -v "$cmd" >/dev/null || {
+    echo -e "${RED}❌ Missing: $cmd${RESET}"
+  
     exit 1
-  fi
+  }
 done
 
-# === 🔁 RESOLVE downloadCheck → ZIP ===
+# -------- 4PDA resolver ----------
+clean_url() {
+  if [[ "$1" == *"4pda.to/stat/go"* ]]; then
+    encoded=$(echo "$1" | sed -n 's/.*[?&]u=\([^&]*\).*/\1/p')
+    python3 - <<EOF
+import urllib.parse
+print(urllib.parse.unquote("$encoded"))
+EOF
+  else
+    echo "$1"
+  fi
+}
+
+# -------- downloadCheck resolver ----------
 resolve_zip() {
   curl -s -I --http1.1 \
     -H "User-Agent: Dalvik/2.1.0 (Linux; Android 16)" \
@@ -62,18 +62,17 @@ resolve_zip() {
   | tr -d '\r'
 }
 
-
+clear
+echo -e "${GREEN}DownloadeR & Resolver (OTA FINAL)${RESET}"
 
 while true; do
   echo
-  read -p "🔗 Enter URL (ZIP or downloadCheck): " URL
+  read -rp "🔗 Enter URL (ZIP or downloadCheck): " INPUT
+  [[ -z "$INPUT" ]] && continue
 
-  if [[ -z "$URL" || ! "$URL" =~ ^https?:// ]]; then
-    echo -e "${RED}❌ Invalid URL${RESET}"
-    continue
-  fi
+  URL=$(clean_url "$INPUT")
 
-  # === 🧠 RESOLVE IF downloadCheck ===
+    # === 🧠 RESOLVE IF downloadCheck ===
   if [[ "$URL" == *"downloadCheck"* ]]; then
     echo -e "${YELLOW}🔄 Resolving OTA link...${RESET}"
     ZIP_URL=$(resolve_zip "$URL")
@@ -95,37 +94,29 @@ while true; do
     echo -e "${RED}❌ Link invalid (HTTP $STATUS)${RESET}"
     continue
   fi
-
-  # === 📄 FILE NAME ===
   FILENAME=$(basename "${URL%%\?*}")
-  read -p "💾 File name [${FILENAME}]: " CUSTOM
+  read -rp "💾 File name [$FILENAME]: " CUSTOM
   FILENAME="${CUSTOM:-$FILENAME}"
 
-  echo -e "\n${BLUE}📥 Downloading...${RESET}\n"
+  echo -e "${BLUE}📥 Downloading...${RESET}"
 
-  START=$(date '+%F %T')
-  aria2c -c -x 16 -s 16 \
+  aria2c -c -x16 -s16 \
+    --user-agent="Dalvik/2.1.0 (Linux; Android 13)" \
+    --referer="https://4pda.to/" \
     -d "$DOWNLOAD_DIR" \
     -o "$FILENAME" \
     "$URL"
 
   if [[ $? -eq 0 ]]; then
-    echo -e "${GREEN}✅ Download complete${RESET}"
-    echo "[$START] OK | $FILENAME" >> "$LOG_FILE"
-    echo -e "📂 Saved to: ${YELLOW}$DOWNLOAD_DIR${RESET}"
+    echo -e "${GREEN}✅ Done${RESET}"
+    echo "[$(date)] OK | $FILENAME" >> "$LOG_FILE"
   else
     echo -e "${RED}❌ Download failed${RESET}"
-    echo "[$START] FAIL | $URL" >> "$LOG_FILE"
   fi
 
   echo
-  echo "1️⃣  Download another OTA"
-  echo "0️⃣  Exit"
-  read -p "➡️ Choose: " OPT
-
-  [[ "$OPT" == "0" ]] && break
-  clear
+  echo "1️⃣ Again"
+  echo "0️⃣ Exit"
+  read -rp "➡️ " C
+  [[ "$C" == "0" ]] && break
 done
-
-echo -e "\n👋 Finished. Log saved to:"
-echo "$LOG_FILE"
