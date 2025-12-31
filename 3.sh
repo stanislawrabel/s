@@ -1,11 +1,19 @@
 #!/bin/bash
 
-GREEN="\033[32m"
-RED="\033[31m"
+# 🎨 Colors 
+WHITE="\033[37m"
+PURPLE="\033[35m" 
 YELLOW="\033[33m"
 BLUE="\033[34m"
-PURPLE="\033[35m"
+RED="\033[31m"
+BLACK="\033[30m"
+WHITE="\033[37m"
+GREEN="\033[32m"
+YELLOW_BG="\033[43m"
+GREEN_BG="\033[42m"
+RED_BG="\033[41m"
 RESET="\033[0m"
+="\033[0m"
 
 
 
@@ -58,6 +66,8 @@ resolve_zip() {
 
 clear
 echo -e "${GREEN}+=====================================+${RESET}"
+echo -e "${GREEN}|  ${RESET}           ${RED_BG}${WHITE}  Universal  ${RESET}           ${GREEN}|${RESET}"
+
 echo -e "${GREEN}|  ${RESET} ${YELLOW}    DownloadeR${RESET} & ${YELLOW}Resolver${RESET}         ${GREEN}|${RESET}"
 
 echo -e "${GREEN}|    ${RED}         by${RESET} ${BLUE}Stano36 ${RESET}             ${GREEN}|${RESET}"
