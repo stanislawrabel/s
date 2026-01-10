@@ -1,5 +1,10 @@
 #!/bin/bash
 
+set -o errexit
+set -o nounset
+set -o pipefail
+set -x
+
 # 🎨 Farby pre výstup
 WHITE="\033[37m"
 PURPLE="\033[35m" 
@@ -156,7 +161,7 @@ echo -e "${YELLOW}$os_version${RESET}"
 echo -e "${YELLOW}$security_os${RESET}"
 echo -e "${YELLOW}$version_type_id${RESET}"
 echo -e "Local install:" "$forbid_status"
-echo -e "${YELLOW}MD5:${RESET}  "$md5"
+echo -e  MD5:"$md5"
 echo -e
 echo -e
 
@@ -270,7 +275,7 @@ fi
 clean_model=$(echo "$model" | grep -oE '(RMX|CPH|PK[A-Z]|PJ[A-Z]|PG[A-Z]|PH[A-Z])[0-9]{3,4}')
 
 if [[ -n "$clean_model" && -n "${MODEL_NAMES[$clean_model]}" ]]; then
-    device_name="${BLUE}$MODEL_NAMES${RESET}[$clean_model]}"
+    device_name="${BLUE}$MODEL_NAMES[$clean_model]}${RESET}"
 else
     device_name="Unknown"
 fi
