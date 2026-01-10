@@ -61,7 +61,7 @@ RMX5085|Realme GT 7 T
 RMX5090|Realme GT 7 Pro Racing Edition
 RMX6688|Realme GT 7
 RMX6699|Realme GT 8
-RMX5200|Realme GT 8 Pro
+RMX5210,RMX5200|Realme GT 8 Pro
 RMX5031,RMX5030|Realme P3 Ultra 5G
 RMX3395,RMX3396|Realme Narzo 50 Pro 5G 
 ### Oppo ###
