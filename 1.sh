@@ -255,7 +255,7 @@ if [[ "$choice" == "4" ]]; then
         echo -e "${RED}❌ Súbor devices.txt neexistuje.${RESET}"
         exit 1
     fi
-
+fi
     echo -e "\n📱 ${PURPLE}Selected device list :${RESET}"
   echo -e "${GREEN}+======================================+${RESET}"
   printf "| %-3s | %-30s |\n" "No." "Model" 
@@ -270,7 +270,7 @@ if [[ "$choice" == "4" ]]; then
 clean_model=$(echo "$model" | grep -oE '(RMX|CPH|PK[A-Z]|PJ[A-Z]|PG[A-Z]|PH[A-Z])[0-9]{3,4}')
 
 if [[ -n "$clean_model" && -n "${MODEL_NAMES[$clean_model]}" ]]; then
-    device_name="${BLUE}MODEL_NAMES${RESET}[$clean_model]}"
+    device_name="${BLUE}$MODEL_NAMES${RESET}[$clean_model]}"
 else
     device_name="Unknown"
 fi
