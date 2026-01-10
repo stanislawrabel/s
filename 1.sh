@@ -275,7 +275,7 @@ fi
 clean_model=$(echo "$model" | grep -oE '(RMX|CPH|PK[A-Z]|PJ[A-Z]|PG[A-Z]|PH[A-Z])[0-9]{3,4}')
 
 if [[ -n "$clean_model" && -n "${MODEL_NAMES[$clean_model]}" ]]; then
-    device_name="${BLUE}$MODEL_NAMES[$clean_model]}${RESET}"
+    device_name="${BLUE}$MODEL_NAMES${RESET}[$clean_model]}"
 else
     device_name="Unknown"
 fi
