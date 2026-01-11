@@ -1,8 +1,5 @@
 #!/bin/bash
 
-set -o errexit
-set -o pipefail
-set -x
 
 # 🎨 Farby pre výstup
 WHITE="\033[37m"
