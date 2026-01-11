@@ -256,7 +256,7 @@ if [[ "$choice" == "4" ]]; then
         echo -e "${RED}❌ Súbor devices.txt neexistuje.${RESET}"
         exit 1
     fi
-fi
+
     echo -e "\n📱 ${PURPLE}Selected device list :${RESET}"
   echo -e "${GREEN}+======================================+${RESET}"
   printf "| %-3s | %-30s |\n" "No." "Model" 
