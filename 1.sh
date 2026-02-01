@@ -116,7 +116,7 @@ done
     output=$(eval "$ota_command")
 
     real_ota_version=$(echo "$output" | grep -o '"realOtaVersion": *"[^"]*"' | cut -d '"' -f4)
-    real_version_name=$(echo "$output" | grep -o '"realVersionName": *"[^"]*"' | cut -d '"' -f4)
+    version_name=$(echo "$output" | grep -o '"versionName": *"[^"]*"' | cut -d '"' -f4)
     os_version=$(echo "$output" | grep -o '"realOsVersion": *"[^"]*"' | cut -d '"' -f4)
     android_version=$(echo "$output" | grep -o '"realAndroidVersion": *"[^"]*"' | cut -d '"' -f4)
     security_os=$(echo "$output" | grep -o '"securityPatchVendor": *"[^"]*"' | cut -d '"' -f4)
@@ -151,7 +151,7 @@ echo -e "${BLUE}${model_name:-Unknown}${RESET}
  (${device_model})${GREEN}$region_name${RESET} (code: ${YELLOW}$region_code${RESET})"
 echo -e
 echo -e "${YELLOW}$ota_version_full${RESET}"
-echo -e "${YELLOW}$real_version_name${RESET}"
+echo -e "${YELLOW}$version_name${RESET}"
 echo -e "${YELLOW}$android_version${RESET}"
 echo -e "${YELLOW}$os_version${RESET}"
 echo -e "${YELLOW}$security_os${RESET}"
@@ -188,6 +188,7 @@ mkdir -p "$(dirname "$OUT")"
 cat > "$OUT" <<EOF
 MODEL=$device_model
 REGION=$region_data
+Version_Name="versionName"
 OTA=$ota_version_full
 ANDROID="Android $android_version"
 OS="$os_version"
