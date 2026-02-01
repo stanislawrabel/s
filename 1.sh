@@ -188,7 +188,7 @@ mkdir -p "$(dirname "$OUT")"
 cat > "$OUT" <<EOF
 MODEL=$device_model
 REGION=$region_data
-Version_Name="versionName"
+Version="$versionName"
 OTA=$ota_version_full
 ANDROID="Android $android_version"
 OS="$os_version"
