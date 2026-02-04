@@ -124,7 +124,7 @@ done
     ota_date=$(echo "$real_ota_version" | grep -oE '_[0-9]{12}$' | tr -d '_')
     ota_version_full="${ota_model}_11.${ota_f_version}_${region_code}_${ota_date}"
     md5=$(echo "$output" | grep -oE '"md5"\s*:\s*"[^"]+"' | head -n1 | cut -d'"' -f4)
-
+    VERSION_NAME= "versionName"
 # Získať URL k About this update
     about_update_url=$(echo "$output" | grep -oP '"panelUrl"\s*:\s*"\K[^"]+')
 # Získať VersionTypeId
@@ -151,7 +151,7 @@ echo -e "${BLUE}${model_name:-Unknown}${RESET}
  (${device_model})${GREEN}$region_name${RESET} (code: ${YELLOW}$region_code${RESET})"
 echo -e
 echo -e "${YELLOW}$ota_version_full${RESET}"
-echo -e "${YELLOW}$version_name${RESET}"
+echo -e "${YELLOW}$versionName${RESET}"
 echo -e "${YELLOW}$android_version${RESET}"
 echo -e "${YELLOW}$os_version${RESET}"
 echo -e "${YELLOW}$security_os${RESET}"
@@ -188,7 +188,7 @@ mkdir -p "$(dirname "$OUT")"
 cat > "$OUT" <<EOF
 MODEL=$device_model
 REGION=$region_data
-Version="$versionName"
+VERSION_NAME="$versionName"
 OTA=$ota_version_full
 ANDROID="Android $android_version"
 OS="$os_version"
